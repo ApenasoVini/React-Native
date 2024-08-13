@@ -5,10 +5,10 @@ export default function HomeScreen() {
   return (
     <LinearGradient
       style={styles.container}
-      colors={['#A9A9A9', '#D3D3D3']}>
+      colors={['#2F2F2F', '#757575']}>
       <Image
         style={styles.logo}
-        source={require('../assets/logo.png')}
+        source={require('../../assets/logo.png')}
       />
     </LinearGradient>
   );
