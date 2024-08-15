@@ -8,9 +8,9 @@ const DATA = [
     { id: '4', nome: 'Ver o jogo do mengão' },
 ];
 
-const Item = ({ nome, concluido, onPress }) => (
+const Item = ({ nome, concluido, onPress, id }) => (
     <Pressable onPress={onPress} style={styles.item}>
-        <Text style={concluido ? styles.concluido : styles.title}>{nome}</Text>
+        <Text style={concluido ? styles.concluido : styles.text}>{id} - {nome}</Text>
     </Pressable>
 );
 
@@ -25,18 +25,21 @@ const App = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Lista de Tarefas</Text>
-            <FlatList
-                data={tarefas}
-                renderItem={({ item }) => (
-                    <Item
-                        nome={item.nome}
-                        concluido={item.concluido}
-                        onPress={() => toggleTarefa(item.id)}
-                    />
-                )}
-                keyExtractor={item => item.id}
-            />
+            <View style={styles.lista}>
+                <FlatList
+                    data={tarefas}
+                    renderItem={({ item }) => (
+                        <Item
+                            nome={item.nome}
+                            id={item.id}
+                            concluido={item.concluido}
+                            onPress={() => toggleTarefa(item.id)}
+                        />
+                    )}
+                    keyExtractor={item => item.id}
+                />
+                <Text style={styles.title}>Lista de Tarefas</Text>
+            </View>
         </View>
     );
 };
@@ -44,20 +47,35 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 50,
         alignItems: 'center',
+        backgroundColor: '#f2f2f2',
+        padding: 10
     },
-    item: {
-        backgroundColor: '#9d9d9e',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+    lista: {
+        backgroundColor: '#1053e3',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 3,
+        borderBottomLeftRadius: 4,
+        flex: 1,
+        padding: 5,
+        alignItems: 'center',
+        borderBottomRightRadius: 50,
     },
     title: {
-        fontSize: 32,
+        color: '#fff',
+        fontSize: 20,
+        textTransform: 'uppercase'
+    },  
+    item: {
+        padding: 20,
+    },
+    text: {
+        fontSize: 25,
+        color: '#fff'
     },
     concluido: {
-        fontSize: 32,
+        fontSize: 25,
+        color: '#969696',
         textDecorationLine: 'line-through',
     },
 });
