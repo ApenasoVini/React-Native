@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         textTransform: 'uppercase'
-    },  
+    },
     item: {
         padding: 20,
     },

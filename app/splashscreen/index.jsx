@@ -8,7 +8,7 @@ export default function HomeScreen() {
       colors={['#2F2F2F', '#757575']}>
       <Image
         style={styles.logo}
-        source={require('../../assets/logo.png')}
+        source={require('../../assets/splashscreen.png')}
       />
     </LinearGradient>
   );
