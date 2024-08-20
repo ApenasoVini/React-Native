@@ -43,8 +43,6 @@ export default function App() {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        flexDirection: 'column',
-        gap: 5,
         padding: 16,
     },
 });

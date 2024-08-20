@@ -4,7 +4,7 @@ import { View, Text, Image, TextInput, StyleSheet, Pressable } from 'react-nativ
 export default function Operacoes({ saque, deposito }) {
     const [valor, setValor] = useState('');
 
-    const handleValorChange = (text) => {
+    const handleValue = (text) => {
         setValor(text);
     };
 
@@ -30,8 +30,8 @@ export default function Operacoes({ saque, deposito }) {
 
     return (
         <View style={styles.container}>
-            <Text>Digite o valor abaixo e escolha uma das operações bancárias:</Text>
-            <View style={styles.formContainer}>
+            <Text style={styles.text}>Digite o valor abaixo e escolha uma das operações bancárias:</Text>
+            <View style={styles.form}>
                 <Image
                     style={styles.icon}
                     source={require('../../../assets/money.svg')}
@@ -40,16 +40,16 @@ export default function Operacoes({ saque, deposito }) {
                     style={styles.input}
                     keyboardType='numeric'
                     value={valor}
-                    onChangeText={handleValorChange}
+                    onChangeText={handleValue}
                     placeholder="0,00"
                 />
-                <Pressable style={styles.button} onPress={handleSaque}>
-                    <Text>Sacar</Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={handleDeposito}>
-                    <Text>Depositar</Text>
-                </Pressable>
             </View>
+            <Pressable style={styles.button} onPress={handleSaque}>
+                <Text style={styles.textButton}>Sacar</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={handleDeposito}>
+                <Text style={styles.textButton}>Depositar</Text>
+            </Pressable>
         </View>
     );
 }
@@ -57,30 +57,45 @@ export default function Operacoes({ saque, deposito }) {
 const styles = StyleSheet.create({
     container: {
         marginTop: 20,
-        padding: 10,
-    },
-    formContainer: {
-        flexDirection: 'column',
         alignItems: 'center',
+        gap: 20
+    },
+    text: {
+        width: '80%',
+        textAlign: 'center'
+    },
+    form: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        gap: 10,
     },
     icon: {
-        width: 50,
-        height: 50,
-        marginBottom: 10,
+        width: 25,
+        height: 25,
     },
     input: {
         height: 40,
         borderColor: '#ddd',
         borderWidth: 1,
-        marginBottom: 10,
+        backgroundColor: '#EDEFF1',
         paddingHorizontal: 8,
         fontSize: 16,
         width: '80%',
     },
     button: {
-        marginVertical: 5,
         padding: 10,
-        backgroundColor: '#e0e0e0',
+        backgroundColor: '#FF0000',
         borderRadius: 5,
+        width: '80%',
+        shadowOffset: { width: 0, height: 4 },
+        shadowColor: '#000',
+        shadowOpacity: 0.4,
+        shadowRadius: 8
     },
+    textButton: {
+        textTransform: 'uppercase',
+        color: '#fff',
+        textAlign: 'center',
+    }
 });
