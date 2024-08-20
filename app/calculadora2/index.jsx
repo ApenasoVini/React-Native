@@ -116,18 +116,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   calculadora: {
     backgroundColor: 'black',
     borderRadius: 15,
-    gap: 20,
-    padding: 15,
+    padding: 15
   },
   display: {
     backgroundColor: 'white',
     height: 35,
-    paddingLeft: 5,
+    paddingLeft: 5
   },
   ope: {
     backgroundColor: 'yellow',

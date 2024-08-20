@@ -4,19 +4,19 @@ const Buttons = (props) => {
 
     return (
         <View style={styles.row}>
-            <Pressable style={[props.styleOne, styles.pressable]} onPress={props.funcOne}>
+            <Pressable style={[props.styleOne, styles.button]} onPress={props.funcOne}>
                 <Text style={styles.text}>{props.textOne}</Text>
             </Pressable>
 
-            <Pressable style={[props.styleTwo, styles.pressable]} onPress={props.funcTwo}>
+            <Pressable style={[props.styleTwo, styles.button]} onPress={props.funcTwo}>
                 <Text style={styles.text}>{props.textTwo}</Text>
             </Pressable>
 
-            <Pressable style={[props.styleThree, styles.pressable]} onPress={props.funcThree}>
+            <Pressable style={[props.styleThree, styles.button]} onPress={props.funcThree}>
                 <Text style={styles.text}>{props.textThree}</Text>
             </Pressable>
 
-            <Pressable style={[props.styleFour, styles.pressable]} onPress={props.funcFour}>
+            <Pressable style={[props.styleFour, styles.button]} onPress={props.funcFour}>
                 <Text style={styles.text}>{props.textFour}</Text>
             </Pressable>
         </View>
@@ -27,22 +27,22 @@ const styles = StyleSheet.create({
     row: {
         display: 'flex',
         flexDirection: 'row',
-        gap: 30,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
-    pressable: {
+    button: {
         width: 35,
         height: 35,
         display: 'flex',
+        margin: 10,
         justifyContent: 'center',
         alignItems: 'center,',
-        color: 'black',
+        color: 'black'
     },
     text: {
-        fontSize: 'large',
+        fontSize: 25,
         fontWeight: '500',
-        textAlign: 'center',
+        textAlign: 'center'
     },
 })
 
