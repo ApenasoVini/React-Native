@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, Pressable, Modal } from 'react-native';
 
 export default function Operacoes({ saque, deposito }) {
     const [valor, setValor] = useState('');
+
 
     const handleValue = (text) => {
         setValor(text);
@@ -30,6 +31,7 @@ export default function Operacoes({ saque, deposito }) {
 
     return (
         <View style={styles.container}>
+
             <Text style={styles.text}>Digite o valor abaixo e escolha uma das operações bancárias:</Text>
             <View style={styles.form}>
                 <TextInput
