@@ -1,48 +1,127 @@
 import React, { useState } from 'react';
-import Home from './components/Home';
-import Operacoes from './components/Operacoes';
-import { View, StyleSheet } from 'react-native';
+import { View, Modal, Text, Pressable, StyleSheet } from 'react-native';
+import Saldo from './components/Saldo';
+import Operacao from './components/Operacao';
 
 export default function App() {
     const [saldo, setSaldo] = useState(7320.92);
+    const [valorModal, setValorModal] = useState(0);
+    const [operacao, setOperacao] = useState('');
+    const [erroVisible, setErroVisible] = useState(false);
+    const [confirmarVisible, setConfirmarVisible] = useState(false);
 
-    const sacar = (valor) => {
-        if (valor <= 0) {
-            alert('O valor do saque deve ser maior que zero.');
-            return;
+    const calcular = () => {
+        if (operacao === 'saque') {
+            const multa = valorModal * 0.025;
+            setSaldo(saldo - valorModal - multa);
+        } else if (operacao === 'deposito') {
+            const bonus = valorModal * 0.01;
+            setSaldo(saldo + valorModal + bonus);
         }
-
-        if (valor > saldo) {
-            alert('Saldo insuficiente.');
-            return;
-        }
-
-        const nSaldo = saldo - valor;
-        const multa = nSaldo * 0.025;
-        setSaldo(nSaldo - multa);
+        setValorModal(0);
+        setConfirmarVisible(false);
     };
 
-    const depositar = (valor) => {
-        if (valor <= 0) {
-            alert('O valor do depósito deve ser maior que zero.');
-            return;
-        }
+    const showErro = () => setErroVisible(true);
 
-        const bonus = valor * 0.01; 
-        setSaldo(saldo + valor + bonus);
+    const showConfirm = (valor, operacao) => {
+        setValorModal(valor);
+        setOperacao(operacao);
+        setConfirmarVisible(true);
     };
 
     return (
-        <View style={styles.main}>
-            <Home saldo={saldo} />
-            <Operacoes saque={sacar} deposito={depositar} />
+        <View style={styles.container}>
+            <Saldo saldo={saldo} />
+            <Operacao
+                saldoAtual={saldo}
+                showErro={showErro}
+                showConfirm={showConfirm}
+            />
+
+            <Modal
+                transparent
+                animationType="slide"
+                visible={erroVisible}
+                onRequestClose={() => setErroVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Digite um valor válido para a operação.</Text>
+                        <Pressable style={styles.button} onPress={() => setErroVisible(false)}>
+                            <Text style={styles.textButton}>Fechar</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                transparent
+                animationType="slide"
+                visible={confirmarVisible}
+                onRequestClose={() => setConfirmarVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>
+                            {operacao === 'saque'
+                                ? `Confirma o saque de R$ ${valorModal}? Saldo futuro: R$ ${(saldo - valorModal - valorModal * 0.025).toFixed(2)}`
+                                : `Confirma o depósito de R$ ${valorModal}? Saldo futuro: R$ ${(saldo + valorModal + valorModal * 0.01).toFixed(2)}`}
+                        </Text>
+                        <View style={styles.modalButtonContainer}>
+                            <Pressable style={styles.button} onPress={calcular}>
+                                <Text style={styles.textButton}>Confirmar</Text>
+                            </Pressable>
+                            <Pressable style={styles.button} onPress={() => setConfirmarVisible(false)}>
+                                <Text style={styles.textButton}>Cancelar</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    main: {
+    container: {
         flex: 1,
         padding: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalView: {
+        width: '75%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+    modalButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        padding: 15,
+        backgroundColor: '#FF0000',
+        borderRadius: 5,
+        width: '45%',
+        marginBottom: 15,
+        alignItems: 'center',
+    },
+    textButton: {
+        color: '#fff',
+        textTransform: 'uppercase',
     },
 });
