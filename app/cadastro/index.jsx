@@ -18,8 +18,8 @@ const App = () => {
                     'https://taskhub-s37f.onrender.com/auth/signup',
                     { "name": name, "email": email, "password": password }
                 );
-                if (response.status === 200){
-                    console.log('User criado')
+                if (response.status === 200) {
+                    console.log('User criado');
                 }
             } catch (error) {
                 console.log('Error', error);
@@ -63,39 +63,45 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#f2f2f2',
-        flexDirection: 'column',
-        padding: 10
+        justifyContent: 'center',
+        backgroundColor: '#f5f5f5',
+        padding: 20
     },
     title: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        textTransform: 'uppercase'
+        fontSize: 32,
+        fontWeight: '700',
+        color: '#333',
+        marginBottom: 30
     },
     input: {
-        width: '90%',
-        marginTop: 15,
-        borderColor: '#000',
-        paddingLeft: 4,
-        borderStyle: 'solid',
+        width: '100%',
+        marginBottom: 15,
+        borderRadius: 10,
+        borderColor: '#ddd',
         borderWidth: 1,
-        height: 35,
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+        fontSize: 16,
+        backgroundColor: '#ddd',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
     button: {
-        backgroundColor: '#000',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: '#000',
-        height: 35,
+        backgroundColor: '#007BFF',
         borderRadius: 10,
-        marginTop: 20,
-        width: 150,
-        display: 'flex',
+        height: 50,
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 20
     },
     buttonText: {
-        color: '#FFF',
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '600'
     }
 });
 
