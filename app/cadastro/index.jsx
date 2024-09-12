@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Pressable, Text, Alert } from 'react-native';
+import { Link } from 'expo-router';
 import axios from 'axios';
 
 const App = () => {
@@ -31,6 +32,9 @@ const App = () => {
 
     return (
         <View style={styles.container}>
+            <Link href='../'>
+                <Text>Voltar ao início</Text>
+            </Link>
             <Text style={styles.title}>Cadastro</Text>
             <TextInput
                 value={name}

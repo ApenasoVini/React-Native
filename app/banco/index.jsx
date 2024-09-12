@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Modal, Text, Pressable, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
 import Saldo from './components/Saldo';
 import Operacao from './components/Operacao';
 
@@ -32,6 +33,9 @@ export default function App() {
 
     return (
         <View style={styles.container}>
+            <Link href='../'>
+                <Text>Voltar ao início</Text>
+            </Link>
             <Saldo saldo={saldo} />
             <Operacao
                 saldoAtual={saldo}

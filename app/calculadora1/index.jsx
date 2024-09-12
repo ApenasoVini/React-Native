@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { Link } from 'expo-router';
 
 const App = () => {
   const [num1, setNum1] = useState('');
@@ -34,6 +35,9 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <Link href='../'>
+        <Text>Voltar ao início</Text>
+      </Link>
       <Text style={styles.title}>Calculadora</Text>
       <View style={styles.numbers}>
         <TextInput
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: '#1E90FF',
     color: '#fff',
-    minWidth: 80,  
+    minWidth: 80,
     justifyContent: 'center',
     padding: 3,
     display: 'flex',

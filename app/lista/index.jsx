@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet, Text, Pressable } from 'react-native';
+import { Link } from 'expo-router';
 
 const DATA = [
     { id: '1', nome: 'Fazer um pudim' },
@@ -25,6 +26,11 @@ const App = () => {
 
     return (
         <View style={styles.container}>
+            <View>
+                <Link href='../'>
+                    <Text>Voltar ao início</Text>
+                </Link>
+            </View>
             <View style={styles.lista}>
                 <FlatList
                     data={tarefas}

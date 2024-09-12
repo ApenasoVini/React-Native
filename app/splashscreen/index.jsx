@@ -1,5 +1,7 @@
 import { Image, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text } from 'react-native';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
@@ -10,6 +12,11 @@ export default function HomeScreen() {
         style={styles.logo}
         source={require('../../assets/splashscreen.png')}
       />
+      <View>
+        <Link href='../'>
+          <Text>Voltar ao início</Text>
+        </Link>
+      </View>
     </LinearGradient>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Button, TextInput, StyleSheet, Picker, FlatList } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, FlatList } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { Link } from 'expo-router';
 
 const App = () => {
     const [name, setName] = useState('');
@@ -61,6 +63,11 @@ const App = () => {
 
     return (
         <View style={styles.container}>
+            <View>
+                <Link href='../'>
+                    <Text>Voltar ao início</Text>
+                </Link>
+            </View>
             <TextInput
                 style={styles.input}
                 placeholder="Buscar Pokémon por nome"

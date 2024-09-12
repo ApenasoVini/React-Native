@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { Link } from 'expo-router';
 import Buttons from './components/Buttons';
 
 export default function App() {
@@ -28,6 +29,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Link href='../'>
+        <Text>Voltar ao início</Text>
+      </Link>
       <View style={styles.calculadora}>
         <TextInput style={styles.display} value={display} editable={false} />
         <Buttons
