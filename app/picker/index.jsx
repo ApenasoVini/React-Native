@@ -1,101 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Link } from 'expo-router';
 
 const App = () => {
-    const [name, setName] = useState('');
-    const [element, setElement] = useState('');
     const [pokemons, setPokemons] = useState([]);
-    const [elements, setElements] = useState([]);
-    const [filteredPokemons, setFilteredPokemons] = useState([]);
+    const [types, setTypes] = useState([]);
+    const [selectedType, setSelectedType] = useState('');
+    const [limit, setLimit] = useState(10);
+
+    const fetchPokemons = async () => {
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
+            const data = await response.json();
+            setPokemons(data.results);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchTypes = async () => {
+        try {
+            const response = await fetch('https://pokeapi.co/api/v2/type');
+            const data = await response.json();
+            setTypes(data.results);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchPokemonsByType = async (type) => {
+        if (type === '') {
+            fetchPokemons();
+            return;
+        }
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+            const data = await response.json();
+            setPokemons(data.pokemon.map((p) => p.pokemon));
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [pokemonsResponse, elementsResponse] = await Promise.all([
-                    fetch('https://pokeapi.co/api/v2/pokemon?limit=100'),
-                    fetch('https://pokeapi.co/api/v2/type')
-                ]);
-
-                const [pokemonsData, elementsData] = await Promise.all([
-                    pokemonsResponse.json(),
-                    elementsResponse.json()
-                ]);
-
-                setPokemons(pokemonsData.results);
-                setFilteredPokemons(pokemonsData.results);
-                setElements(elementsData.results);
-            } catch (error) {
-                console.error(`Erro: ${error}`);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    const handleSearch = () => {
-        const nameFiltered = pokemons.filter(pokemon =>
-            pokemon.name.toLowerCase().includes(name.toLowerCase())
-        );
-        setFilteredPokemons(nameFiltered);
-    };
-
-    const handleElementChange = async (element) => {
-        setElement(element);
-
-        if (element) {
-            try {
-                const response = await fetch(`https://pokeapi.co/api/v2/type/${element}`);
-                const data = await response.json();
-                const pokemonList = data.pokemon.map(p => p.pokemon.name);
-                const typeFiltered = pokemons.filter(p => pokemonList.includes(p.name));
-                setFilteredPokemons(typeFiltered);
-            } catch (error) {
-                console.error(`Erro: ${error}`);
-            }
-        } else {
-            setFilteredPokemons(pokemons);
-        }
-
-        handleSearch();
-    };
+        fetchPokemons();
+        fetchTypes();
+    }, [limit]);
 
     return (
         <View style={styles.container}>
-            <View>
-                <Link href='../'>
-                    <Text>Voltar ao início</Text>
-                </Link>
-            </View>
-            <TextInput
-                style={styles.input}
-                placeholder="Buscar Pokémon por nome"
-                value={name}
-                onChangeText={setName}
-            />
-            <Button title="Buscar" onPress={handleSearch} />
-
+            <Link href='../'>
+                <Text>Voltar ao início</Text>
+            </Link>
+            <Text style={styles.title}>Pokédex</Text>
             <Picker
-                selectedValue={element}
+                selectedValue={selectedType}
                 style={styles.picker}
-                onValueChange={handleElementChange}
+                onValueChange={(itemValue) => {
+                    setSelectedType(itemValue);
+                    fetchPokemonsByType(itemValue);
+                }}
             >
-                <Picker.Item label="Selecione um tipo" value="" />
-                {elements.map((type, index) => (
-                    <Picker.Item key={index} label={type.name} value={type.name} />
+                <Picker.Item label="Todos" value="" />
+                {types.map((type) => (
+                    <Picker.Item key={type.name} label={type.name} value={type.name} />
                 ))}
             </Picker>
 
             <FlatList
-                data={filteredPokemons}
+                data={pokemons}
                 keyExtractor={(item) => item.name}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <Text style={styles.pokemonName}>{item.name}</Text>
+                    <View style={styles.pokemonItem}>
+                        <Text style={styles.pokemonText}>{item.name}</Text>
                     </View>
                 )}
             />
+
+            <View style={styles.buttonContainer}>
+                <Button title="Mostrar Mais" onPress={() => setLimit(limit + 10)} />
+            </View>
         </View>
     );
 };
@@ -103,42 +88,31 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-        backgroundColor: '#f5f5f5',
-    },
-    input: {
-        height: 40,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        marginBottom: 15,
-        width: '100%',
-        paddingHorizontal: 10,
-        borderRadius: 5,
         backgroundColor: '#fff',
+        padding: 16,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+        textAlign: 'center',
     },
     picker: {
+        height: 50,
         width: '100%',
-        height: 40,
-        marginVertical: 15,
+        marginBottom: 16,
     },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        padding: 10,
-        marginVertical: 5,
-        width: '100%',
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 3,
+    pokemonItem: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
-    pokemonName: {
+    pokemonText: {
         fontSize: 18,
-        fontWeight: 'bold',
+    },
+    buttonContainer: {
+        marginTop: 16,
+        alignItems: 'center',
     },
 });
 
