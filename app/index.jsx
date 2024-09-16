@@ -1,58 +1,60 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { Link } from 'expo-router';
 
 export default function HomeScreen() {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Página Inicial</Text>
+        <ScrollView style={styles.container}>
             <View style={styles.links}>
-                <Link href='./banco' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./banco'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Banco</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./cadastro' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./cadastro'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Cadastro</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./calculadora1' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./calculadora1'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Calculadora 1</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./calculadora2' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./calculadora2'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Calculadora 2</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./lista' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./lista'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Lista</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./picker' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./picker'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Picker</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </Link>
-                <Link href='./splashscreen' asChild>
-                    <TouchableOpacity style={styles.button}>
+                <Link href='./splashscreen'>
+                    <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Splashscreen</Text>
-                    </TouchableOpacity>
+                    </Pressable>
+                </Link>
+                <Link href='./perfil'>
+                    <Pressable style={styles.button}>
+                        <Text style={styles.buttonText}>perfil</Text>
+                    </Pressable>
                 </Link>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#272925',
         padding: 20,
     },
@@ -63,12 +65,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: '#ffffff',
-        marginBottom: 30,
-    },
     button: {
         backgroundColor: '#5D159D',
         paddingVertical: 15,
@@ -77,7 +73,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         width: 175,
         alignItems: 'center',
-    },  
+    },
     buttonText: {
         color: '#ffffff',
         fontSize: 18,
