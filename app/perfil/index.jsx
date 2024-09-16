@@ -9,7 +9,6 @@ const App = () => {
         <View style={styles.container}>
             <Header
                 link='../'
-                nome='Voltar ao início'
             />
             <View style={styles.welcome}>
                 <Image
@@ -18,12 +17,12 @@ const App = () => {
                 />
                 <Text style={styles.title}>Bem vindo(a) ao meu perfil!</Text>
                 <Text style={styles.desc}>Olá, meu nome é Vinícius, sou desenvolvedor frontend e este é meu App</Text>
-                <Link href='./perfil/tecnologias'>
+                <Link href='./tecnologias'>
                     <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Desenvolvimento</Text>
                     </Pressable>
                 </Link>
-                <Link href='././perfil/sobre'>
+                <Link href='./sobre'>
                     <Pressable style={styles.button}>
                         <Text style={styles.buttonText}>Sobre mim</Text>
                     </Pressable>

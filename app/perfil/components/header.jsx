@@ -10,7 +10,7 @@ const Header = (props) => {
                         style={styles.img}
                         source={require('../assets/home.png')}
                     />
-                    <Text style={styles.text}>{props.nome}</Text>
+                    <Text style={styles.text}>Voltar</Text>
                 </Pressable>
             </Link>
         </View>

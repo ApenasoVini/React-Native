@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, FlatList, Image, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, FlatList, Image, Text } from 'react-native';
+import Header from '../components/header';
 
 const dev1 = require('../assets/dev1.png');
 const dev2 = require('../assets/dev2.png');
@@ -19,22 +20,27 @@ const data = [
 
 const Tecnologias = () => {
     const renderItem = ({ item }) => (
-        <ScrollView style={styles.item}>
+        <View style={styles.item}>
             <Image
                 style={styles.img}
                 source={item.img}
             />
             <Text style={styles.title}>{item.title}</Text>
-        </ScrollView>
+        </View>
     );
 
     return (
-        <FlatList
-            style={styles.container}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-        />
+        <ScrollView>
+            <Header
+                link='./'
+            />
+            <FlatList
+                style={styles.container}
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+            />
+        </ScrollView>
     );
 };
 
@@ -47,12 +53,14 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 16,
         borderWidth: 1,
+        display: 'flex',
+        alignItems: 'center',
         borderColor: '#ddd',
         borderRadius: 8,
     },
     img: {
-        width: 150,
-        height: 150,
+        width: 200,
+        height: 200,
         borderRadius: 8,
     },
     title: {
