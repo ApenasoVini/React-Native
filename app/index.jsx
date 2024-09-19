@@ -60,17 +60,14 @@ const styles = StyleSheet.create({
     },
     links: {
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexDirection: 'column',
     },
     button: {
         backgroundColor: '#5D159D',
         paddingVertical: 15,
         borderRadius: 30,
         marginVertical: 10,
-        marginLeft: 15,
         width: 175,
         alignItems: 'center',
     },

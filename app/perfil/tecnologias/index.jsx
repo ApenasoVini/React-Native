@@ -1,45 +1,44 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, FlatList, Image, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, Text } from 'react-native';
+import { Link } from 'expo-router';
 import Header from '../components/header';
 
 const dev1 = require('../assets/dev1.png');
 const dev2 = require('../assets/dev2.png');
 
-const data = [
+const tecnologias = [
     {
-        id: '1',
+        id: 1,
         title: 'Trabalho com react e react native',
+        description: 'O React é uma biblioteca front-end JavaScript de código aberto com foco em criar interfaces de usuário em páginas web.',
         img: dev1,
     },
     {
-        id: '2',
+        id: 2,
         title: 'Também estou estudando VueJS',
+        description: 'Vue.js é um framework JavaScript de código-aberto, focado no desenvolvimento de interfaces de usuário e aplicativos de página única.',
         img: dev2,
     },
 ];
 
 const Tecnologias = () => {
-    const renderItem = ({ item }) => (
-        <View style={styles.item}>
-            <Image
-                style={styles.img}
-                source={item.img}
-            />
-            <Text style={styles.title}>{item.title}</Text>
-        </View>
-    );
-
     return (
         <ScrollView>
-            <Header
-                link='./'
-            />
-            <FlatList
-                style={styles.container}
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
+            <Header link='./' />
+            {tecnologias.map((tecnologia, index) => (
+                <View key={index} style={styles.item}>
+                    <Link
+                        href={{
+                            pathname: `detalhes/${tecnologia.id}`,  
+                            params: { data: JSON.stringify(tecnologia) }  
+                        }}
+                    >
+                        <Image source={tecnologia.img} style={styles.img} />
+                    </Link>
+
+                    <Text style={styles.title}>{tecnologia.title}</Text>
+                </View>
+            ))}
         </ScrollView>
     );
 };
