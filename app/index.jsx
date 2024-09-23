@@ -47,6 +47,11 @@ export default function HomeScreen() {
                         <Text style={styles.buttonText}>perfil</Text>
                     </Pressable>
                 </Link>
+                <Link href='./ifome'>
+                    <Pressable style={styles.button}>
+                        <Text style={styles.buttonText}>Ifome</Text>
+                    </Pressable>
+                </Link>
             </View>
         </ScrollView>
     );
