@@ -1,53 +1,126 @@
-import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { CartContext } from '../_layout';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, Pressable, ScrollView, Image, FlatList } from 'react-native';
+import { AppContext } from '../../../scripts/AppContext';
 import Header from '../components/header';
 
-export default function Cart() {
-  const { cart } = useContext(CartContext);
+const Item = ({ nome, local, preco, img }) => (
+  <View style={styles.item}>
+    <View>
+      <Text style={styles.info}>{nome}</Text>
+      <Text style={styles.info}>{local}</Text>
+      <Text style={styles.preco}>R$ {preco}</Text>
+    </View>
+  </View>
+);
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+const App = () => {
+  const { cart, setCart } = useContext(AppContext);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const totalValue = cart.reduce((sum, item) => sum + item.preco, 0);
+    setTotal(totalValue.toFixed(2));
+  }, [cart]);
+
+  const handleExcludeItem = (index) => {
+    const newCart = cart.filter((_, i) => i !== index);
+    setCart(newCart);
+  };
 
   return (
-    <View style={styles.container}>
-      <Header title="Carrinho" />
-      <FlatList
-        data={cart}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>R$ {item.price.toFixed(2)}</Text>
-          </View>
-        )}
-      />
-      <Text style={styles.total}>Total do pedido: R$ {total.toFixed(2)}</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <Header link='../' title='Seu carrinho' />
+      <View style={styles.list}>
+        <FlatList
+          data={cart}
+          renderItem={({ item, index }) => (
+            <View style={styles.content}>
+              <Item {...item} />
+              <Pressable onPress={() => handleExcludeItem(index)} style={styles.removeBtn}>
+                <Text style={styles.removeTxt}>X</Text>
+              </Pressable>
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+      <View style={styles.final}>
+        <Text style={styles.total}>Total: R$ {total}</Text>
+        <View style={styles.end}>
+          <Pressable onPress={() => setCart([])} style={styles.press}>
+            <Text style={styles.pressTxt}>Limpar carrinho</Text>
+          </Pressable>
+          <Pressable style={styles.press}>
+            <Text style={styles.pressTxt}>Finalizar compra</Text>
+          </Pressable>
+        </View>
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f1f2f6',
-    padding: 20,
   },
-  card: {
-    backgroundColor: '#fff',
+  list: {
+    padding: 10
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  removeBtn: {
+    justifyContent: 'center',
+  },
+  removeTxt: {
+    color: 'red',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  preco: {
+    fontSize: 23,
+    fontWeight: 'bold',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    alignItems: 'center',
+    borderColor: 'gray',
     borderRadius: 10,
+    marginBottom: 20,
+  },
+  info: {
+    fontSize: 21,
+  },
+  final: {
     padding: 15,
-    marginBottom: 10,
-  },
-  name: {
-    fontSize: 18,
-  },
-  price: {
-    fontSize: 16,
+    alignItems: 'center',
   },
   total: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: '700',
+  },
+  end: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  press: {
+    backgroundColor: '#ff0000',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginHorizontal: 5,
+    borderRadius: 5,
+    alignItems: 'center',
+    width: 170,
+  },
+  pressTxt: {
+    color: 'white',
   },
 });
+
+export default App;

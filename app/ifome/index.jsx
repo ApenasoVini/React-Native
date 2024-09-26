@@ -1,74 +1,133 @@
 import React, { useContext } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, Image } from 'react-native';
-import { CartContext } from './_layout';
+import { View, Text, Image, StyleSheet, Pressable, ScrollView, FlatList } from 'react-native';
+import { AppContext } from '../../scripts/AppContext';
 import Header from './components/header';
+import { Link } from 'expo-router';
 
-const items = [
-  { id: 1, name: 'Big Mac', price: 32.50, image: require('./assets/bigmac.jpg') },
-  { id: 2, name: 'Coxinha', price: 4.50, image: require('./assets/coxinha.jpg') },
-  { id: 3, name: 'Hot Dog', price: 14.20, image: require('./assets/hotdog.jpg') }
-];
+const Item = ({ nome, local, preco, img, id }) => {
+    const { cart, setCart } = useContext(AppContext);
+
+    const addToCart = () => {
+        setCart([...cart, { id, nome, local, preco }]);
+    };
+
+    return (
+        <View style={styles.itemContainer}>
+            <Image source={{ uri: img }} style={styles.img} />
+            <View style={styles.itemDetails}>
+                <Text style={styles.nome}>{nome}</Text>
+                <Text style={styles.local}>{local}</Text>
+                <Text style={styles.preco}>R$ {preco}</Text>
+                <Pressable style={styles.buy} onPress={addToCart}>
+                    <Text style={styles.buyTxt}>Adicionar ao carrinho</Text>
+                </Pressable>
+            </View>
+        </View>
+    );
+};
 
 const App = () => {
-  const { addToCart, cart } = useContext(CartContext);
+    const { foods, cart } = useContext(AppContext);
 
-  return (
-    <View style={styles.container}>
-      <Header title="iFome" cartCount={cart.length} />
-      <FlatList
-        data={items}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={item.image} style={styles.image} />
-            <View style={styles.info}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.price}>R$ {item.price.toFixed(2)}</Text>
-              <Button title="Comprar" onPress={() => addToCart(item)} color="#ff4757" />
+    return (
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+                <Header link='../' title='iFome' />
+                <View style={styles.cartArea}>
+                    <Image source={require('./assets/cart.png')} style={styles.cartImg} />
+                    <Text style={styles.txtCart}>{cart.length} itens</Text>
+                    {cart.length > 0 && (
+                        <Link href='./cart' style={styles.link}>
+                            <Text>Finalizar compra</Text>
+                        </Link>
+                    )}
+                </View>
             </View>
-          </View>
-        )}
-      />
-    </View>
-  );
-}
+            <View style={styles.carts}>
+                <FlatList
+                    data={foods}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </View>
+        </ScrollView>
+    );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f1f2f6',
-    padding: 20,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-  },
-  info: {
-    marginLeft: 15,
-    flex: 1,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  price: {
-    fontSize: 16,
-    marginVertical: 5,
-  },
+    container: {
+        flex: 1,
+    },
+    header: {
+        marginBottom: 20,
+    },
+    cartArea: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 20,
+    },
+    txtCart: {
+        marginRight: 20,
+    },
+    carts: {
+        padding: 10
+    },
+    link: {
+        backgroundColor: '#ff0000',
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        color: 'white',
+    },
+    itemContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 10,
+        padding: 20,
+    },
+    img: {
+        width: 150,
+        height: 150,
+        marginRight: 20,
+    },
+    itemDetails: {
+        flex: 1,
+    },
+    nome: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    local: {
+        fontSize: 14,
+        color: '#666',
+        marginBottom: 5,
+    },
+    preco: {
+        fontSize: 16,
+        color: '#000',
+        marginBottom: 10,
+        fontWeight: 'bold',
+    },
+    buy: {
+        backgroundColor: '#ff0000',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    buyTxt: {
+        color: 'white',
+    },
+    cartImg: {
+        width: 30,
+        height: 30,
+        marginRight: 20,
+    },
 });
 
 export default App;
