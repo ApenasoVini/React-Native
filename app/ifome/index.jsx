@@ -32,13 +32,13 @@ const App = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Header link='../' title='iFome' />
+                <Header link='../' header='iFome' />
                 <View style={styles.cartArea}>
                     <Image source={require('./assets/cart.png')} style={styles.cartImg} />
                     <Text style={styles.txtCart}>{carrinho.length} itens</Text>
                     {carrinho.length > 0 && (
                         <Link href='./cart' style={styles.link}>
-                            <Text>Finalizar compra</Text>
+                            <Text>Carrinho</Text>
                         </Link>
                     )}
                 </View>
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 5,
-        color: 'white',
+        color: '#fff',
     },
     itemContainer: {
         flexDirection: 'row',
         marginBottom: 20,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: '#000',
         borderRadius: 10,
         padding: 20,
     },
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     },
     local: {
         fontSize: 14,
-        color: '#666',
         marginBottom: 5,
     },
     preco: {
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buyTxt: {
-        color: 'white',
+        color: '#fff',
     },
     cartImg: {
         width: 30,

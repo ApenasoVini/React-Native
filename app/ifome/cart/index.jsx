@@ -14,29 +14,29 @@ const Item = ({ nome, local, preco }) => (
 );
 
 const App = () => {
-  const { carrinho, setcarrinho } = useContext(AppContext);
+  const { carrinho, setCarrinho } = useContext(AppContext);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const totalValue = carrinho.reduce((sum, item) => sum + item.preco, 0);
-    setTotal(totalValue.toFixed(2));
+    const total = carrinho.reduce((sum, item) => sum + item.preco, 0);
+    setTotal(total.toFixed(2));
   }, [carrinho]);
 
-  const handleExcludeItem = (index) => {
+  const excluir = (index) => {
     const novoCarrinho = carrinho.filter((_, i) => i !== index);
-    setcarrinho(novoCarrinho);
+    setCarrinho(novoCarrinho);
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Header link='../' title='Seu carrinho' />
+      <Header link='../' header='Seu carrinho' />
       <View style={styles.list}>
         <FlatList
           data={carrinho}
           renderItem={({ item, index }) => (
             <View style={styles.content}>
               <Item {...item} />
-              <Pressable onPress={() => handleExcludeItem(index)} style={styles.removeBtn}>
+              <Pressable onPress={() => excluir(index)} style={styles.removeBtn}>
                 <Text style={styles.removeTxt}>X</Text>
               </Pressable>
             </View>
@@ -47,7 +47,7 @@ const App = () => {
       <View style={styles.final}>
         <Text style={styles.total}>Total: R$ {total}</Text>
         <View style={styles.end}>
-          <Pressable onPress={() => setcarrinho([])} style={styles.press}>
+          <Pressable onPress={() => setCarrinho([])} style={styles.press}>
             <Text style={styles.pressTxt}>Limpar carrinho</Text>
           </Pressable>
           <Pressable style={styles.press}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 15,
     alignItems: 'center',
-    borderColor: 'gray',
+    borderColor: '#000',
     borderRadius: 10,
     marginBottom: 20,
   },
