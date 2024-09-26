@@ -2,8 +2,8 @@ import { createContext, useState } from "react";
 
 export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
-    const [foods, setFoods] = useState(
+    const [carrinho, setCarrinho] = useState([]);
+    const [lanches, setLanches] = useState(
         [
             {
                 "id": 1,
@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
         ]
     );
 
-    return <AppContext.Provider value={{ cart, setCart, foods, setFoods }}>
+    return <AppContext.Provider value={{ carrinho, setCarrinho, lanches, setLanches }}>
         {children}
     </AppContext.Provider>;
 }

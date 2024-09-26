@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Image, FlatList } from '
 import { AppContext } from '../../../scripts/AppContext';
 import Header from '../components/header';
 
-const Item = ({ nome, local, preco, img }) => (
+const Item = ({ nome, local, preco }) => (
   <View style={styles.item}>
     <View>
       <Text style={styles.info}>{nome}</Text>
@@ -14,17 +14,17 @@ const Item = ({ nome, local, preco, img }) => (
 );
 
 const App = () => {
-  const { cart, setCart } = useContext(AppContext);
+  const { carrinho, setcarrinho } = useContext(AppContext);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const totalValue = cart.reduce((sum, item) => sum + item.preco, 0);
+    const totalValue = carrinho.reduce((sum, item) => sum + item.preco, 0);
     setTotal(totalValue.toFixed(2));
-  }, [cart]);
+  }, [carrinho]);
 
   const handleExcludeItem = (index) => {
-    const newCart = cart.filter((_, i) => i !== index);
-    setCart(newCart);
+    const novoCarrinho = carrinho.filter((_, i) => i !== index);
+    setcarrinho(novoCarrinho);
   };
 
   return (
@@ -32,7 +32,7 @@ const App = () => {
       <Header link='../' title='Seu carrinho' />
       <View style={styles.list}>
         <FlatList
-          data={cart}
+          data={carrinho}
           renderItem={({ item, index }) => (
             <View style={styles.content}>
               <Item {...item} />
@@ -47,7 +47,7 @@ const App = () => {
       <View style={styles.final}>
         <Text style={styles.total}>Total: R$ {total}</Text>
         <View style={styles.end}>
-          <Pressable onPress={() => setCart([])} style={styles.press}>
+          <Pressable onPress={() => setcarrinho([])} style={styles.press}>
             <Text style={styles.pressTxt}>Limpar carrinho</Text>
           </Pressable>
           <Pressable style={styles.press}>

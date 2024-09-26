@@ -5,10 +5,10 @@ import Header from './components/header';
 import { Link } from 'expo-router';
 
 const Item = ({ nome, local, preco, img, id }) => {
-    const { cart, setCart } = useContext(AppContext);
+    const { carrinho, setCarrinho } = useContext(AppContext);
 
-    const addToCart = () => {
-        setCart([...cart, { id, nome, local, preco }]);
+    const adicionar = () => {
+        setCarrinho([...carrinho, { id, nome, local, preco }]);
     };
 
     return (
@@ -18,7 +18,7 @@ const Item = ({ nome, local, preco, img, id }) => {
                 <Text style={styles.nome}>{nome}</Text>
                 <Text style={styles.local}>{local}</Text>
                 <Text style={styles.preco}>R$ {preco}</Text>
-                <Pressable style={styles.buy} onPress={addToCart}>
+                <Pressable style={styles.buy} onPress={adicionar}>
                     <Text style={styles.buyTxt}>Adicionar ao carrinho</Text>
                 </Pressable>
             </View>
@@ -27,7 +27,7 @@ const Item = ({ nome, local, preco, img, id }) => {
 };
 
 const App = () => {
-    const { foods, cart } = useContext(AppContext);
+    const { lanches, carrinho } = useContext(AppContext);
 
     return (
         <ScrollView style={styles.container}>
@@ -35,8 +35,8 @@ const App = () => {
                 <Header link='../' title='iFome' />
                 <View style={styles.cartArea}>
                     <Image source={require('./assets/cart.png')} style={styles.cartImg} />
-                    <Text style={styles.txtCart}>{cart.length} itens</Text>
-                    {cart.length > 0 && (
+                    <Text style={styles.txtCart}>{carrinho.length} itens</Text>
+                    {carrinho.length > 0 && (
                         <Link href='./cart' style={styles.link}>
                             <Text>Finalizar compra</Text>
                         </Link>
@@ -45,7 +45,7 @@ const App = () => {
             </View>
             <View style={styles.carts}>
                 <FlatList
-                    data={foods}
+                    data={lanches}
                     renderItem={({ item }) => (
                         <Item {...item} />
                     )}

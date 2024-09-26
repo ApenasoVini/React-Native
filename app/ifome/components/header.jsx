@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Link } from 'expo-router';
 
-const Header = ({ link, title }) => {
+const Header = ({ link, header }) => {
     return (
         <View style={styles.container}>
             <Link href={link}>
                 <Image style={styles.image} source={require('../assets/arrow.png')} />
             </Link>
-            <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text}>{header}</Text>
         </View>
     );
 };
