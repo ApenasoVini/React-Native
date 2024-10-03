@@ -7,53 +7,67 @@ export default function HomeScreen() {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.links}>
-                <Link href='./banco'>
-                    <Pressable style={styles.button}>
+                <Pressable style={styles.button}>
+                    <Link href='./banco'>
                         <Text style={styles.buttonText}>Banco</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./cadastro'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./cadastro'>
                         <Text style={styles.buttonText}>Cadastro</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./calculadora1'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./calculadora1'>
                         <Text style={styles.buttonText}>Calculadora 1</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./calculadora2'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./calculadora2'>
                         <Text style={styles.buttonText}>Calculadora 2</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./lista'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./lista'>
                         <Text style={styles.buttonText}>Lista</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./picker'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./picker'>
                         <Text style={styles.buttonText}>Picker</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./splashscreen'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./splashscreen'>
                         <Text style={styles.buttonText}>Splashscreen</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./perfil'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./perfil'>
                         <Text style={styles.buttonText}>perfil</Text>
-                    </Pressable>
-                </Link>
-                <Link href='./ifome'>
-                    <Pressable style={styles.button}>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./ifome'>
                         <Text style={styles.buttonText}>Ifome</Text>
-                    </Pressable>
-                </Link>
+                    </Link>
+                </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./camera'>
+                        <Text style={styles.buttonText}>Câmera</Text>
+                    </Link>
+                </Pressable>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 }
 
@@ -61,18 +75,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#272925',
-        padding: 20,
+        padding: 26,
     },
     links: {
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
         flexDirection: 'column',
     },
     button: {
         backgroundColor: '#5D159D',
         paddingVertical: 15,
         borderRadius: 30,
-        marginVertical: 10,
+        marginBottom: 10,
         width: 175,
         alignItems: 'center',
     },

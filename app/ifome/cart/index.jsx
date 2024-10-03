@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, FlatList } from 'react-native';
 import { AppContext } from '../../../scripts/AppContext';
 import Header from '../components/header';
 
@@ -28,7 +28,7 @@ const App = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header link='../' header='Seu carrinho' />
       <View style={styles.list}>
         <FlatList
@@ -55,7 +55,7 @@ const App = () => {
           </Pressable>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

@@ -4,15 +4,15 @@ import { Link } from 'expo-router'
 const Header = (props) => {
     return (
         <View style={styles.container}>
-            <Link href={props.link}>
-                <Pressable style={styles.button}>
+            <Pressable style={styles.button}>
+                <Link href={props.link}>
                     <Image
                         style={styles.img}
                         source={require('../assets/home.png')}
                     />
                     <Text style={styles.text}>Voltar</Text>
-                </Pressable>
-            </Link>
+                </Link>
+            </Pressable>
         </View>
     )
 }
@@ -24,8 +24,11 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.8,
+        display: 'flex',
+        justifyContent: 'center',
         shadowRadius: 4,
-        marginBottom: 25
+        marginBottom: 25,
+        height: 80
     },
     button: {
         display: 'flex',

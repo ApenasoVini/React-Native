@@ -21,11 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 15,
-        height: 50
-    },
-    image: {
-        width: 30,
-        height: 30,
+        height: 80
     },
     text: {
         fontSize: 20,

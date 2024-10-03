@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, ScrollView, FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, FlatList } from 'react-native';
 import { AppContext } from '../../scripts/AppContext';
 import Header from './components/header';
 import { Link } from 'expo-router';
@@ -30,7 +30,7 @@ const App = () => {
     const { lanches, carrinho } = useContext(AppContext);
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                 <Header link='../' header='iFome' />
                 <View style={styles.cartArea}>
@@ -52,7 +52,7 @@ const App = () => {
                     keyExtractor={item => item.id.toString()}
                 />
             </View>
-        </ScrollView>
+        </View>
     );
 };
 
