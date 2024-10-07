@@ -66,6 +66,12 @@ export default function HomeScreen() {
                         <Text style={styles.buttonText}>Câmera</Text>
                     </Link>
                 </Pressable>
+
+                <Pressable style={styles.button}>
+                    <Link href='./galeria'>
+                        <Text style={styles.buttonText}>Galeria</Text>
+                    </Link>
+                </Pressable>
             </View>
         </ScrollView >
     );
