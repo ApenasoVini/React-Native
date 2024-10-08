@@ -1,15 +1,18 @@
 import { useState, useRef } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image, Linking } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from 'expo-media-library';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function Camera() {
-    const [permissao, pedirPermissao] = useCameraPermissions();
+    const [permissaoCamera, pedirPermissaoCamera] = useCameraPermissions();
     const [foto, setFoto] = useState(null);
     const [lado, setLado] = useState('back');
+    const [modoScanner, setModoScanner] = useState(false);
     const cameraRef = useRef(null);
+    const [scanned, setScanned] = useState(false);
 
-    if (!permissao) {
+    if (!permissaoCamera) {
         return (
             <View style={styles.container}>
                 <Text>Carregando...</Text>
@@ -17,11 +20,11 @@ export default function Camera() {
         );
     }
 
-    if (!permissao.granted) {
+    if (!permissaoCamera.granted) {
         return (
             <View style={styles.container}>
                 <Text style={styles.alert}>Você precisa da permissão para utilizar a câmera</Text>
-                <TouchableOpacity style={styles.button} onPress={pedirPermissao}>
+                <TouchableOpacity style={styles.buttonPermission} onPress={pedirPermissaoCamera}>
                     <Text style={styles.buttonText}>Pedir permissão</Text>
                 </TouchableOpacity>
             </View>
@@ -45,6 +48,17 @@ export default function Camera() {
         setFoto(null);
     };
 
+    const escanearQrCode = async ({ type, data }) => {
+        setScanned(true);
+        await Linking.openURL(data);
+        setScanned(false);
+    };
+
+    const alternarModoScanner = () => {
+        setModoScanner(!modoScanner);
+        setScanned(false);
+    };
+
     return (
         <View style={styles.container}>
             {foto ? (
@@ -66,22 +80,45 @@ export default function Camera() {
                     </View>
                 </View>
             ) : (
-                <CameraView style={styles.camera} facing={lado} ref={cameraRef}>
-                    <View style={styles.buttonsOne}>
-                        <TouchableOpacity style={styles.button} onPress={tirarFoto}>
-                            <Image
-                                style={styles.img}
-                                source={require('../../assets/takePhoto.png')}
+                <View style={styles.container}>
+                    {modoScanner ? (
+                        <View style={styles.camera}>
+                            <BarCodeScanner
+                                onBarCodeScanned={scanned ? undefined : escanearQrCode}
+                                style={StyleSheet.absoluteFillObject}
                             />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={inverterLado}>
-                            <Image
-                                style={styles.img}
-                                source={require('../../assets/switchSide.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </CameraView>
+                            <TouchableOpacity style={styles.button} onPress={alternarModoScanner}>
+                                <Image
+                                    style={styles.img}
+                                    source={require('../../assets/cameraMode.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <CameraView style={styles.camera} facing={lado} ref={cameraRef}>
+                            <View style={styles.buttonsOne}>
+                                <TouchableOpacity style={styles.button} onPress={tirarFoto}>
+                                    <Image
+                                        style={styles.img}
+                                        source={require('../../assets/takePhoto.png')}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={inverterLado}>
+                                    <Image
+                                        style={styles.img}
+                                        source={require('../../assets/switchSide.png')}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={alternarModoScanner}>
+                                    <Image
+                                        style={styles.img}
+                                        source={require('../../assets/qrCodeMode.png')}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </CameraView>
+                    )}
+                </View>
             )}
         </View>
     );
@@ -90,21 +127,23 @@ export default function Camera() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        backgroundColor: "#000",
+        backgroundColor: "#CCC",
     },
     alert: {
         color: "#ff0000",
         textAlign: "center",
+        fontSize: 16,
     },
     camera: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonsOne: {
         flex: 1,
-        alignItems: "flex-end",
-        justifyContent: "center",
         flexDirection: 'row',
+        justifyContent: "space-around",
+        alignItems: 'flex-end',
         marginBottom: 20,
     },
     buttonsTwo: {
@@ -112,8 +151,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         marginVertical: 20,
     },
+    buttonPermission: {
+        backgroundColor: '#272925',
+        marginTop: 10,
+        alignSelf: 'center',
+        width: 200,
+        height: 40,
+        justifyContent: 'center',
+        borderRadius: 5,
+    },
     button: {
-        margin: 10
+        margin: 10,
     },
     buttonText: {
         color: "#fff",
@@ -121,6 +169,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     image: {
-        flex: 1,
+        borderRadius: 10,
+        width: 375,
+        height: 375,
+        alignSelf: 'center'
+    },
+    img: {
+        width: 60,
+        height: 60,
     },
 });
