@@ -1,8 +1,9 @@
-import { Image, Text, TextInput, View, StyleSheet, Pressable } from 'react-native'
-import { useState } from 'react'
-import { useRouter } from 'expo-router';
+import { Image, Text, TextInput, View, ScrollView, StyleSheet, Pressable, TouchableOpacity } from 'react-native'
+import { useState, useRef } from 'react'
+import { useRouter } from 'expo-router'
 import Header from '../components/header'
-import * as ImagePicker from 'expo-image-picker';
+import { CameraView, useCameraPermissions } from 'expo-camera'
+import * as ImagePicker from 'expo-image-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default Adicionar = () => {
@@ -11,7 +12,11 @@ export default Adicionar = () => {
     const [ano, setAno] = useState('')
     const [local, setLocal] = useState('')
     const [descricao, setDescricao] = useState('')
+    const [permissao, pedirPermissao] = useCameraPermissions();
+    const cameraRef = useRef(null);
     const router = useRouter();
+    const [facing, setFacing] = useState('front');
+    const [modoFoto, setModoFoto] = useState(false); 
 
     const selecionarImagem = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,8 +28,42 @@ export default Adicionar = () => {
 
         if (!result.canceled) {
             setImagem(result.assets[0].uri);
+            setModoFoto(false); 
         }
     };
+
+    if (!permissao) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.alert}>Carregando...</Text>
+            </View>
+        )
+    }
+    if (!permissao.granted) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.alert}>Você precisa da permissão para utilizar a câmera</Text>
+                <Pressable onPress={pedirPermissao} style={styles.button}>
+                    <Text style={styles.buttonText}>Pedir permissão</Text>
+                </Pressable>
+            </View>
+        )
+    }
+
+    const tirarFoto = async () => {
+        const foto = await cameraRef.current?.takePictureAsync({
+            quality: 0.5,
+            base64: true,
+        });
+        if (foto) {
+            setImagem(foto.uri);
+            setModoFoto(false);
+        }
+    }
+
+    const mudarCamera = () => {
+        setFacing(prev => (prev === 'front' ? 'back' : 'front'));
+    }
 
     const salvar = async () => {
         try {
@@ -50,7 +89,7 @@ export default Adicionar = () => {
                 }])
                 await AsyncStorage.setItem('memorias', data)
             }
-            router.push('../memorias');
+            router.push('../');
         }
         catch (e) {
             console.log(e)
@@ -58,7 +97,7 @@ export default Adicionar = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Header />
             <View style={styles.inputContainer}>
                 <TextInput style={styles.input} onChangeText={setTitulo} placeholder='Título' />
@@ -66,16 +105,34 @@ export default Adicionar = () => {
                 <TextInput style={styles.input} onChangeText={setLocal} placeholder='Onde aconteceu? (cidade)' />
                 <TextInput style={styles.input} onChangeText={setDescricao} placeholder='Conte sobre sua memória' multiline />
                 <View style={styles.imagePickerContainer}>
-                    <Pressable style={styles.button} onPress={selecionarImagem}>
-                        <Text style={styles.buttonText}>Selecionar uma imagem da Galeria</Text>
-                    </Pressable>
-                    {imagem && <Image source={{ uri: imagem }} style={styles.imagem} />}
+                    {modoFoto ? (
+                        <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
+                            <View style={styles.btns}>
+                                <TouchableOpacity style={styles.button} onPress={mudarCamera}>
+                                    <Text style={styles.buttonText}>Trocar Câmera</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={tirarFoto}>
+                                    <Text style={styles.buttonText}>Tirar Foto</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </CameraView>
+                    ) : (
+                        <>
+                            <Pressable style={styles.button} onPress={selecionarImagem}>
+                                <Text style={styles.buttonText}>Selecionar uma imagem da Galeria</Text>
+                            </Pressable>
+                            {imagem && <Image source={{ uri: imagem }} style={styles.imagem} />}
+                        </>
+                    )}
                 </View>
+                <Pressable style={styles.button} onPress={() => setModoFoto(!modoFoto)}>
+                    <Text style={styles.buttonText}>{modoFoto ? 'Cancelar' : 'Abrir Câmera'}</Text>
+                </Pressable>
             </View>
-            <Pressable style={styles.button} onPress={salvar}>
+            <Pressable style={styles.buttonAdd} onPress={salvar}>
                 <Text style={styles.buttonText}>Adicionar</Text>
             </Pressable>
-        </View>
+        </ScrollView>
     )
 }
 
@@ -107,6 +164,16 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: 'center',
         marginBottom: 25,
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
+    buttonAdd: {
+        backgroundColor: '#1a8777',
+        padding: 15,
+        borderRadius: 30,
+        alignItems: 'center',
+        marginBottom: 25,
+        marginVertical: 10,
         marginHorizontal: 20,
     },
     buttonText: {
@@ -120,4 +187,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
     },
-})
+    camera: {
+        width: '100%',
+        height: 300,
+        borderRadius: 10,
+        marginTop: 10,
+    },
+    btns: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 20,
+    },
+});
