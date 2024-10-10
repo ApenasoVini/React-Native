@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { Link } from 'expo-router';
 import Buttons from './components/Buttons';
 
-export default function App() {
+export default function CalculadoraCompleta() {
   const [display, setDisplay] = useState('');
 
   const addToDisplay = (value) => {

@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput, Pressable, Text, Alert } from 'react-nativ
 import { Link } from 'expo-router';
 import axios from 'axios';
 
-const App = () => {
+const Cadastro = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default App;
+export default Cadastro;

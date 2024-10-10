@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import Header from './components/header';
 import { useRouter } from 'expo-router';
 
-const App = () => {
+const Perfil = () => {
     const router = useRouter();
 
     return (
@@ -14,10 +14,10 @@ const App = () => {
             <View style={styles.welcome}>
                 <Image
                     style={styles.img}
-                    source={require('./assets/perfil.png')}
+                    source={require('../../assets/perfil.png')}
                 />
                 <Text style={styles.title}>Bem vindo(a) ao meu perfil!</Text>
-                <Text style={styles.desc}>Olá, meu nome é Vinícius, sou desenvolvedor frontend e este é meu App</Text>
+                <Text style={styles.desc}>Olá, meu nome é Vinícius, sou desenvolvedor frontend e este é meu Perfil</Text>
 
                 <Pressable style={styles.button} onPress={() => router.push('./tecnologias')}>
                     <Text style={styles.buttonText}>Tecnologias</Text>
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default Perfil;

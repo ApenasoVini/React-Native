@@ -4,9 +4,9 @@ import { Link } from 'expo-router';
 import Header from '../components/header';
 import { View } from 'react-native';
 
-const sm1 = require('../assets/sm1.jpg');
-const sm2 = require('../assets/sm2.jpg');
-const sm3 = require('../assets/sm3.jpg');
+const sm1 = require('../../../assets/sm1.jpg');
+const sm2 = require('../../../assets/sm2.jpg');
+const sm3 = require('../../../assets/sm3.jpg');
 
 const curiosidades = [
     {

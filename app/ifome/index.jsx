@@ -26,15 +26,15 @@ const Item = ({ nome, local, preco, img, id }) => {
     );
 };
 
-const App = () => {
+const IFome = () => {
     const { lanches, carrinho } = useContext(AppContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Header link='../' header='iFome' />
+                <Header link='../' header='IFome' />
                 <View style={styles.cartArea}>
-                    <Image source={require('./assets/cart.png')} style={styles.cartImg} />
+                    <Image source={require('../../assets/cart.png')} style={styles.cartImg} />
                     <Text style={styles.txtCart}>{carrinho.length} itens</Text>
                     {carrinho.length > 0 && (
                         <Link href='./cart' style={styles.link}>
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default IFome;

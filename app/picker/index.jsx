@@ -3,7 +3,7 @@ import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Link } from 'expo-router';
 
-const App = () => {
+const Pokemon = () => {
     const [pokemons, setPokemons] = useState([]);
     const [types, setTypes] = useState([]);
     const [selectedType, setSelectedType] = useState('');
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default Pokemon;

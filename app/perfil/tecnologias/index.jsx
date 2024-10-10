@@ -3,8 +3,8 @@ import { ScrollView, StyleSheet, View, Image, Text } from 'react-native';
 import { Link } from 'expo-router';
 import Header from '../components/header';
 
-const dev1 = require('../assets/dev1.png');
-const dev2 = require('../assets/dev2.png');
+const dev1 = require('../../../assets/dev1.png');
+const dev2 = require('../../../assets/dev2.png');
 
 const tecnologias = [
     {

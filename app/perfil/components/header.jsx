@@ -8,7 +8,7 @@ const Header = (props) => {
                 <Link href={props.link}>
                     <Image
                         style={styles.img}
-                        source={require('../assets/home.png')}
+                        source={require('../../../assets/home.png')}
                     />
                     <Text style={styles.text}>Voltar</Text>
                 </Link>

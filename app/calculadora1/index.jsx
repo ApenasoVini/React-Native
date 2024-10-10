@@ -3,7 +3,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { Link } from 'expo-router';
 
-const App = () => {
+const CalculadoraSimples = () => {
   const [num1, setNum1] = useState('');
   const [num2, setNum2] = useState('');
   const [res, setRes] = useState(null)
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App;
+export default CalculadoraSimples;

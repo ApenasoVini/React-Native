@@ -4,7 +4,7 @@ import { Link } from 'expo-router';
 import Saldo from './components/Saldo';
 import Operacao from './components/Operacao';
 
-export default function App() {
+export default function Banco() {
     const [saldo, setSaldo] = useState(7320.92);
     const [valorModal, setValorModal] = useState(0);
     const [operacao, setOperacao] = useState('');

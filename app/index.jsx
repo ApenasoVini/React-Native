@@ -70,6 +70,12 @@ export default function App() {
                     <Text style={styles.buttonText}>Galeria</Text>
                 </Link>
             </Pressable>
+
+            <Pressable style={styles.button}>
+                <Link href='./memorias'>
+                    <Text style={styles.buttonText}>Memorias</Text>
+                </Link>
+            </Pressable>
         </View >
     );
 }

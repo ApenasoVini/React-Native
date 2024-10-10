@@ -15,7 +15,7 @@ const Item = ({ nome, concluido, onPress, id }) => (
     </Pressable>
 );
 
-const App = () => {
+const Lista = () => {
     const [tarefas, setTarefas] = useState(DATA);
 
     const toggleTarefa = (id) => {
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default Lista;
